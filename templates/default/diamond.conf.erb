@@ -1,0 +1,174 @@
+################################################################################
+# Diamond Configuration File
+################################################################################
+
+################################################################################
+### Options for the server
+[server]
+
+# Handlers for published metrics.
+handlers = <%= @diamond_handlers.join(", ") %> 
+# User diamond will run as
+# Leave empty to use the current user
+user = <%= @user %>
+
+# Group diamond will run as
+# Leave empty to use the current group
+group = <%= @group %>
+
+# Pid file
+pid_file = <%= @pidfile %>
+
+# Directory to load collector modules from
+collectors_path = <%= @collectors_path %>
+
+# Directory to load collector config from
+collectors_config_path = <%= @collectors_config_path %> 
+
+# Interval to reload collectors
+collectors_reload_interval = <%= @reload_interval %>
+
+################################################################################
+### Options for handlers
+[handlers]
+
+# daemon logging handler(s)
+keys = rotated_file
+
+### Defaults options for all Handlers
+[[default]]
+
+[[ArchiveHandler]]
+
+# File to write archive log files
+log_file = <%= @archive_handler["log_file"] %>
+
+# Number of days to keep archive log files
+days = <%= @archive_handler["days"] %>
+
+[[GraphiteHandler]]
+### Options for GraphiteHandler
+
+# Graphite server host
+host = <%= @graphite_handler["host"] %>
+
+# Port to send metrics to
+port = <%= @graphite_handler["port"] %>
+
+# Socket timeout (seconds)
+timeout = <%= @graphite_handler["timeout"] %>
+
+[[GraphitePickleHandler]]
+### Options for GraphitePickleHandler
+
+# Graphite server host
+host = <%= @graphite_picklehandler["host"] %>
+
+# Port to send metrics to
+port = <%= @graphite_picklehandler["port"] %>
+
+# Socket timeout (seconds)
+timeout = <%= @graphite_picklehandler["timeout"] %>
+
+# Batch size for pickled metrics
+batch = <%= @graphite_picklehandler["batch"] %>
+
+[[MySQLHandler]]
+### Options for MySQLHandler
+
+# MySQL Connection Info
+hostname    = <%= @mysqlhandler["host"] %>
+port        = <%= @mysqlhandler["port"] %>
+username    = <%= @mysqlhandler["username"] %>
+password    = <%= @mysqlhandler["password"] %>
+database    = <%= @mysqlhandler["database"] %>
+table       = <%= @mysqlhandler["table"] %>
+# INT UNSIGNED NOT NULL
+col_time    = <%= @mysqlhandler["col_time"] %>
+# VARCHAR(255) NOT NULL
+col_metric  = <%= @mysqlhandler["col_metric"] %>
+# VARCHAR(255) NOT NULL
+col_value   = <%= @mysqlhandler["col_value"] %>
+
+[[StatsdHandler]]
+host = <%= @statsdhandler["host"] %>
+port = <%= @statsdhandler["port"] %>
+
+[[TSDBHandler]]
+host = <%= @tsdbhandler["host"] %>
+port = <%= @tsdbhandler["port"] %>
+timeout = <%= @tsdbhandler["timeout"] %>
+
+################################################################################
+### Options for collectors
+[collectors]
+
+[[default]]
+### Defaults options for all Collectors
+
+# Uncomment and set to hardcode a hostname for the collector path
+# Keep in mind, periods are seperators in graphite
+# hostname = my_custom_hostname
+<% if @collectors["hostname"].length > 2 %>
+hostname = <%= @collectors["hostname"] %>
+<% end %>
+# If you perfer to just use a different way of calculating the hostname
+# Uncomment and set this to one of these values:
+# fqdn_short  = Default. Similar to hostname -s
+# fqdn        = hostname output
+# fqdn_rev    = hostname in reverse (com.example.www)
+# uname_short = Similar to uname -n, but only the first part
+# uname_rev   = uname -r in reverse (com.example.www)
+hostname_method = <%= @collectors["hostname_method"] %>
+
+# Path Prefix and Suffix
+# you can use one or both to craft the path where you want to put metrics
+# such as: %(path_prefix)s.$(hostname)s.$(path_suffix)s.$(metric)s
+# path_prefix = servers
+# path_suffix =
+<% if @collectors["path_prefix"].length > 2 %>
+path_prefix = <%= @collectors["path_prefix"] %>
+<% end %>
+<% if @collectors["path_suffix"].length > 2 %>
+path_suffix = <%= @collectors["path_suffix"] %>
+<% end %>
+
+# Default Poll Interval (seconds)
+interval = <%= @collectors["interval"] %>
+
+################################################################################
+### Options for logging
+# for more information on file format syntax:
+# http://docs.python.org/library/logging.config.html#configuration-file-format
+
+[loggers]
+
+keys = root
+
+# handlers are higher in this config file, in:
+# [handlers]
+# keys = ...
+
+[formatters]
+
+keys = default
+
+[logger_root]
+
+# to increase verbosity, set DEBUG
+level = INFO
+handlers = rotated_file
+
+[handler_rotated_file]
+
+class = handlers.TimedRotatingFileHandler
+level = DEBUG
+formatter = default
+# rotate at midnight, each day and keep 7 days
+args = ('/var/log/diamond/diamond.log', 'midnight', 1, 7)
+
+[formatter_default]
+
+format = [%(asctime)s] [%(threadName)s] %(message)s
+datefmt =
+
