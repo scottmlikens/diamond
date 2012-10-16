@@ -3,34 +3,34 @@
 This cookbook aims to make the deployment of Diamond an open ended box that you can tie together however you see fit.  Simple example of installing diamond and configuring it with nothing but graphite.
 
 #+BEGIN_CODE ruby
-diamond\_install "#{node['hostname']}" do  \\
-  action :git  \\
-end  \\
-diamond\_configure "#{node['hostname']}" do  \\
-  action :config  \\
-  diamond\_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphite.GraphiteHandler" ]  \\
-  graphite\_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})  \\
-end  \\
+diamond_install "#{node['hostname']}" do  
+  action :git  
+end  
+diamond_configure "#{node['hostname']}" do  
+  action :config  
+  diamond_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphite.GraphiteHandler" ]  
+  graphite_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})  
+end  
 #+END_CODE
 
 Enabling plugins is not very difficult, due to the nature of how Diamond makes those we try to be kind :)
 
 #+BEGIN_CODE ruby
-diamond\_plugin "CPUCollector" do\\ 
-  action :enable\\
-  options({})\\
-end\\
-diamond\_plugin "PingCollector" do\\
-  action :enable\\
-  options({\\
-            "enabled" => "True",\\
-            "bin" => "/bin/ping",\\
-            "use\_sudo" => "False",\\
-            "sudo\_cmd" => "/usr/bin/sudo",\\
-            "target\_1" => "google.com",\\
-            "target\_2" => "aol.com"\\
-          })  \\
-end  \\
+diamond_plugin "CPUCollector" do 
+  action :enable  
+  options({})
+end
+diamond_plugin "PingCollector" do
+  action :enable
+  options({
+            "enabled" => "True",
+            "bin" => "/bin/ping",
+            "use_sudo" => "False",
+            "sudo_cmd" => "/usr/bin/sudo",
+            "target_1" => "google.com",
+            "target_2" => "aol.com"
+          })  
+end  
 #+END_CODE
 
 
