@@ -13,7 +13,7 @@ action :git do
   end
 
   new_resource.required_python_packages.collect do |pkg, ver|
-    python_pip "#{pkg}" do
+    python_pip pkg do
       version ver
       action :install
     end
@@ -37,6 +37,7 @@ action :git do
     action :delete
     recursive true
   end
+  new_resource.updated_by_last_action(true)
 end
 
 action :deb do
@@ -54,7 +55,7 @@ action :deb do
   end
 
   new_resource.required_debian_packages.collect do |pkg|
-    package "#{pkg}"
+    package pkg
   end
     
   execute "build diamond" do
@@ -68,7 +69,7 @@ action :deb do
     end
   end
 
-  package "#{remotes}" do
+  package "diamond" do
     source "/mnt/git/#{new_resource.name}/build/diamond_3.0.2_all.deb"
     provider Chef::Provider::Package::Dpkg
     action :install
@@ -79,4 +80,5 @@ action :deb do
     action :delete
     recursive true
   end
+  new_resource.updated_by_last_action(true)
 end

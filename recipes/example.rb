@@ -16,10 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-diamond_install "#{node['hostname']}" do
+diamond_install node['hostname'] do
   action :git
 end
-diamond_configure "#{node['hostname']}" do
+diamond_configure node['hostname'] do
   action :config
   diamond_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphitepickle.GraphitePickleHandler" ]
   graphite_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})
