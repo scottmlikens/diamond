@@ -20,6 +20,12 @@ Installation Prefix problems
 
 Feel free to submit pull requests that can improve this problem.
 
+Default Collectors
+=======================
+
+Diamond has the following [Collectors](https://github.com/BrightcoveOS/Diamond/wiki/Collectors) enabled by default:  
+`Cpu`, `DiskSpace`, `DiskUsage`, `LoadAvg`, `Memory`, `SockStat`, `Vmstat`.
+
 Resources and Providers
 =======================
 
