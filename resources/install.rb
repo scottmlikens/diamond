@@ -1,6 +1,5 @@
 actions :git, :deb
 
-attribute :name, :kind_of => String, :name_attribute => true
 attribute :options, :kind_of => Hash
 attribute :git_repository_uri, :kind_of => String, :default => "https://github.com/BrightcoveOS/Diamond.git"
 attribute :git_reference, :kind_of => String, :default => "master"

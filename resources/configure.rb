@@ -1,6 +1,5 @@
 actions :config
 
-attribute :name, :kind_of => String, :name_attribute => true
 attribute :cookbook, :kind_of => String, :default => "diamond"
 attribute :options, :kind_of => Hash
 attribute :diamond_installation_path, :kind_of => String, :default => "/usr/local"
