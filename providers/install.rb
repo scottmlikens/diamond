@@ -19,6 +19,12 @@ action :git do
     end
   end
 
+  execute "create version.txt" do
+    cwd "/mnt/git/#{new_resource.name}"
+    command "/bin/bash version.sh > version.txt"
+    creates "/mnt/git/#{new_resource.name}/version.txt"
+  end
+
   execute "install diamond" do
     cwd "/mnt/git/#{new_resource.name}"
     command "python setup.py install"
