@@ -22,7 +22,7 @@ action :git do
   execute "create version.txt" do
     cwd "/mnt/git/#{new_resource.name}"
     command "/bin/bash version.sh > version.txt"
-    creates "/mnt/git/#{new_resource.name}/version.txt"
+    not_if { ::File.exists?"("/usr/local/bin/diamond")
   end
 
   execute "install diamond" do
