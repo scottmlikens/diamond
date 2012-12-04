@@ -13,7 +13,7 @@ action :git do
   end
 
   new_resource.required_python_packages.collect do |pkg, ver|
-    python_pip pkg do
+    python_pip "#{pkg}" do
       version ver
       action :install
     end
@@ -22,7 +22,7 @@ action :git do
   execute "create version.txt" do
     cwd "/mnt/git/#{new_resource.name}"
     command "/bin/bash version.sh > version.txt"
-    not_if { ::File.exists?("/usr/local/bin/diamond")
+    not_if { ::File.exists?("/usr/local/bin/diamond") }
   end
 
   execute "install diamond" do
@@ -61,7 +61,7 @@ action :deb do
   end
 
   new_resource.required_debian_packages.collect do |pkg|
-    package pkg
+    package "#{pkg}"
   end
     
   execute "build diamond" do
@@ -75,7 +75,7 @@ action :deb do
     end
   end
 
-  package "diamond" do
+  package "#{remotes}" do
     source "/mnt/git/#{new_resource.name}/build/diamond_3.0.2_all.deb"
     provider Chef::Provider::Package::Dpkg
     action :install
