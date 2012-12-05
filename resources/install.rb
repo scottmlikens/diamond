@@ -6,6 +6,7 @@ attribute :git_reference, :kind_of => String, :default => "master"
 attribute :required_python_packages, :kind_of => Hash, :default => { "configobj" => "4.7.2","psutil" => "0.6.1"}
 attribute :required_debian_packages, :kind_of => Array, :default => ["pbuilder","python-mock","python-configobj","cdbs"]
 attribute :cookbook, :kind_of => String, :default => "diamond"
+attribute :tarball_path, :kind_of => String, :default => "https://github.com/BrightcoveOS/Diamond/tarball/master"
 
 def initialize(*args)
   super
