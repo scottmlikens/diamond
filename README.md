@@ -39,6 +39,7 @@ Actions:
 
 * `git` - Clones the source from [Github](https://github.com/BrightcoveOS/Diamond.git) and installs using `python setup.py install`
 * `deb` - Clones the source from [Github](https://github.com/BrightcoveOS/Diamond.git) and installs using `make builddeb`
+* `tarball` - Fetches a tarball containing using HTTP and installs using `python setup.py install`
 
 Attribute Parameters:
 
@@ -49,6 +50,8 @@ Attribute Parameters:
 * `required_python_packages` - Hash - default - `{ "configobj" => "4.7.2","psutil" => "0.6.1"}`
 * `required_debian_packages` - Array - default - `["pbuilder","python-mock","python-configobj","cdbs"]`
 * `cookbook` - String - default - `diamond`
+* `tarball_path` - String - default - `https://github.com/BrightcoveOS/Diamond/archive/master.tar.gz`
+* `tarball_extract_fldr` - String - Top level folder inside tarball, default: `Diamond-master`
 
 `configure.rb`
 -------------
