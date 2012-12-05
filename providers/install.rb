@@ -91,22 +91,23 @@ end
 
 action :tarball do
   directory "create temp extract path" do
-    path "/mnt/diamond_tarball/#{new_resource.name}"
+    path "/mnt/diamond_tarball"
     action :create
     recursive true
   end
 
-  remote_file "/mnt/diamond_tarball/diamond-latest.tar.gz" do
-    path new_resource.tarball_path
+  remote_file "/mnt/diamond_tarball/diamond.tar.gz" do
+    source new_resource.tarball_path
     backup false
     mode "0644"
-    not_if { ::File.exists?("/usr/local/bin/diamond") || ::File.exists?("/mnt/diamond_tarball/#{new_resource.name}/setup.py") }
+    action :create_if_missing
+    not_if { ::File.exists?("/usr/local/bin/diamond") || ::File.exists?("/mnt/diamond_tarball/#{new_resource.tarball_extract_fldr}/setup.py") }
   end
 
   script "extract tarball" do
     interpreter "bash"
-    code "tar -C /mnt/diamond_tarball/#{new_resource.name}"
-    not_if { ::File.exists?("/usr/local/bin/diamond") || ::File.exists?("/mnt/diamond_tarball/#{new_resource.name}/setup.py") }
+    code "tar -C /mnt/diamond_tarball -xzf /mnt/diamond_tarball/diamond.tar.gz"
+    not_if { ::File.exists?("/usr/local/bin/diamond") || ::File.exists?("/mnt/diamond_tarball/#{new_resource.tarball_extract_fldr}/setup.py") }
   end
 
   new_resource.required_python_packages.collect do |pkg, ver|
@@ -117,13 +118,13 @@ action :tarball do
   end
 
   execute "create version.txt" do
-    cwd "/mnt/diamond_tarball/#{new_resource.name}"
+    cwd "/mnt/diamond_tarball/#{new_resource.tarball_extract_fldr}"
     command "/bin/bash version.sh > version.txt"
     not_if { ::File.exists?("/usr/local/bin/diamond") }
   end
 
   execute "install diamond" do
-    cwd "/mnt/diamond_tarball/#{new_resource.name}"
+    cwd "/mnt/diamond_tarball/#{new_resource.tarball_extract_fldr}"
     command "python setup.py install"
     creates "/usr/local/bin/diamond"
   end
@@ -135,8 +136,8 @@ action :tarball do
     end
   end
 
-  directory "clean up temp git path" do
-    path "/mnt/diamond_tarball/#{new_resource.name}"
+  directory "clean up temp extract path" do
+    path "/mnt/diamond_tarball/#{new_resource.tarball_extract_fldr}"
     action :delete
     recursive true
   end
