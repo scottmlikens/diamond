@@ -1,9 +1,10 @@
 action :enable do
   template new_resource.name do
     path "#{new_resource.collectors_path}/#{new_resource.name}.conf"
+    cookbook "diamond_lwrp"
     owner "root"
     group "root"
-    mode 0644
+    mode "0644"
     source new_resource.options["source"] || "generic_collector_config.conf.erb"
     cookbook new_resource.options["cookbook"] || "diamond"
     variables :name=>new_resource.name, :options=>new_resource.options
