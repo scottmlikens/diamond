@@ -1,3 +1,4 @@
+name "diamond"
 maintainer       "Scott M. Likens"
 maintainer_email "scott at likens dot us"
 license          "Apache 2.0"
