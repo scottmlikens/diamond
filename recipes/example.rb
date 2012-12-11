@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 diamond_install node['hostname'] do
-  action :git
+  action :tarball
 end
 diamond_configure node['hostname'] do
   action :config
