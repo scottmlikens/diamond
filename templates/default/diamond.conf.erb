@@ -29,7 +29,7 @@ collectors_config_path = <%= @collectors_config_path %>
 collectors_reload_interval = <%= @reload_interval %>
 
 # Directory to load handler configs from
-handlers_config_path = /etc/diamond/handlers/
+handlers_config_path = <%= @prefix %>/etc/diamond/handlers/
 
 ################################################################################
 ### Options for handlers

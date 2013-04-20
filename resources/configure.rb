@@ -1,17 +1,15 @@
 actions :config
 
 attribute :cookbook, :kind_of => String, :default => "diamond"
-attribute :options, :kind_of => Hash
-attribute :diamond_installation_path, :kind_of => String, :default => "/usr/local"
-attribute :diamond_configuration_path, :kind_of => String, :default => "/etc/diamond"
+attribute :prefix, :kind_of => String, :default => "/opt/diamond"
 attribute :diamond_configuration_source, :kind_of => String, :default => "diamond.conf.erb"
 attribute :diamond_init_source, :kind_of => String, :default => "diamond.erb"
 attribute :diamond_handlers, :kind_of => Array, :default => ["diamond.handler.graphitepickle.GraphitePickleHandler"]
 attribute :diamond_user, :kind_of => String
 attribute :diamond_group, :kind_of => String
 attribute :diamond_pidfile, :kind_of => String, :default => "/var/run/diamond.pid"
-attribute :collectors_config_path, :kind_of => String, :default => "/etc/diamond/collectors/"
-attribute :diamond_collectors_path, :kind_of => String, :default => "/usr/local/share/diamond/collectors/"
+attribute :collectors_config_path, :kind_of => String, :default => "/opt/diamond/etc/diamond/collectors"
+attribute :diamond_collectors_path, :kind_of => String, :default => "/opt/diamond/share/diamond/collectors/"
 attribute :collectors_reload_interval, :kind_of => Fixnum, :default => 3600
 attribute :archive_handler, :kind_of => Hash, :default => {  "log_file" => "/var/log/diamond/diamond.log", "days" => 7 }
 attribute :graphite_handler, :kind_of => Hash, :default => { "host" => "localhost", "port" => 2003, "batch" => 256, "timeout" => 15 }
@@ -23,7 +21,7 @@ attribute :collectors, :kind_of => Hash, :default => { "hostname_method" => "fqd
  
 def initialize(*args)
   super
-  @action = :create
-  @run_context.include_recipe ["build-essential","git","python","python::pip"]
+  @action = :config
+  @run_context.include_recipe ["build-essential","git","python","python::pip","python::virtualenv","runit::default"]
 end
 
