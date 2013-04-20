@@ -17,7 +17,3 @@ suites:
   run_list:
   - recipe[diamond::test_tarball]
   attributes: {}
-- name: test_upgrade
-  run_list:
-  - recipe[diamond::test_upgrade]
-  attributes: {}

@@ -1,11 +1,11 @@
 action :enable do
   template new_resource.name do
-    path "#{new_resource.collectors_path}/#{new_resource.name}.conf"
+    path new_resource.collectors_path + "/" + new_resource.name + ".conf"
     owner "root"
     group "root"
     mode "0644"
     source new_resource.options["source"] || "generic_collector_config.conf.erb"
-    cookbook new_resource.options["cookbook"] || "diamond_lwrp"
+    cookbook new_resource.options["cookbook"] || "diamond"
     variables :name=>new_resource.name, :options=>new_resource.options
     notifies :restart, "runit_service[diamond]"
   end
@@ -14,7 +14,7 @@ end
 
 action :disable do
   file new_resource.name do
-    path "#{new_resource.collectors_path}/#{new_resource.name}.conf"
+    path new_resource.collectors_path + "/" + new_resource.name + ".conf"
     action :delete
     notifies :restart, "runit_service[diamond]"
   end

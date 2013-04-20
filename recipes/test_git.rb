@@ -22,3 +22,11 @@ end
 diamond_configure node['hostname'] do
   action :config
 end
+diamond_plugin "CPUCollector" do  
+  action :enable  
+  options({})  
+end  
+diamond_plugin "NetworkCollector" do
+  action :enable
+  options({})
+end
