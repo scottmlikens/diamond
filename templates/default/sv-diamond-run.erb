@@ -1,0 +1,11 @@
+#!/bin/sh
+exec 2>&1
+VIRTUAL_ENV="<%= @options[:prefix] %>"
+export VIRTUAL_ENV
+_OLD_VIRTUAL_PATH="$PATH"
+PATH="$VIRTUAL_ENV/bin:$PATH"
+export GRAPHITE_ROOT="<%= @options[:prefix] %>"
+export PATH
+cd <%= @options[:prefix] %>
+exec chpst -l <%= @options[:prefix] %>/diamond.lock -- <%= @options[:prefix] %>/bin/diamond -l -f -c <%= @options[:prefix] %>/etc/diamond/diamond.conf
+
