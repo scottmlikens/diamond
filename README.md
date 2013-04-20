@@ -190,7 +190,7 @@ Attribute Parameters:
   </tr>
   <tr>
     <td>collectors</td>
-    <td>Hash></td>
+    <td>Hash</td>
     <td>Configuration for the collectors allowing you to configure suffix, prefix, how to determine hostname and/or set the hostname manually</td>
     <td><tt><code>{ "hostname_method" => "fqdn_short", "hostname" => String.new, "path_prefix" => String.new, "path_suffix" => String.new, "interval" => 300 }</code></tt></td>
   </tr>
