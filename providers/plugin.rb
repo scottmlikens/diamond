@@ -1,3 +1,10 @@
+# Enables a Collector for Diamond and restarts it
+#  
+#    diamond_plugin "CPUCollector" do
+#     action :enable
+#     options({})
+#    end
+
 action :enable do
   template new_resource.name do
     path new_resource.collectors_path + "/" + new_resource.name + ".conf"
@@ -11,6 +18,13 @@ action :enable do
   end
   new_resource.updated_by_last_action(true)
 end
+
+# Disables a Collector for Diamond
+#
+#    diamond_plugin "CPUCollector" do
+#     action :disable
+#     options({})
+#    end
 
 action :disable do
   file new_resource.name do

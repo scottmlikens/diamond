@@ -1,3 +1,9 @@
+# Installs Diamond via Github using the git interface
+#
+#    diamond_install node['hostname'] do  
+#     action :git
+#    end
+
 action :git do
   python_pip "diamond" do
     action :remove
@@ -47,6 +53,12 @@ action :git do
   end
   new_resource.updated_by_last_action(true)
 end
+
+# Installs Diamond via Github using a tarball
+#
+#    diamond_install node['hostname'] do  
+#     action :tarball
+#    end
 
 action :tarball do
   python_pip "diamond" do

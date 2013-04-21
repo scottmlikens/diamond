@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII" />
+<title>
+  Cookbook Documentation
+  
+    &mdash; Documentation by YARD 0.8.3
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="cookbooks_list_link"
+        href="cookbooks_list.html">
+      Cookbook List
+    </a>
+  
+    <a class="full_list_link" id="recipes_list_link"
+        href="recipes_list.html">
+      Recipe List
+    </a>
+  
+    <a class="full_list_link" id="resources_list_link"
+        href="resources_list.html">
+      Resource List
+    </a>
+  
+    <a class="full_list_link" id="definitions_list_link"
+        href="definitions_list.html">
+      Definitions List
+    </a>
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Libraries List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content">
+
+<div id="filecontents">
+  <h1>Chef Cookbooks Documentation</h1>
+  <div id='filecontents'><h1>Description</h1>
+
+<p>This cookbook provides providers and resources to configure and manage <a href="https://github.com/BrightcoveOS/Diamond">Diamond</a> Diamond is a python daemon that collects system metrics and publishes them to Graphite. It is capable of collecting cpu, memory, network, i/o, load and disk metrics. Additionally, it features an API for implementing custom collectors for gathering metrics from almost any source.</p>
+
+<h2>Requirements</h2>
+
+<h2>Chef Version</h2>
+
+<p>Requires Chef 0.7.10 or higher for Lightweight Resource and Provider support. Chef 0.8+ is recommended. While this cookbook can be used in <code>chef-solo</code> mode, to gain the most flexibility, we recommend using <code>chef-client</code> with a Chef Server.</p>
+
+<h2>Cookbooks</h2>
+
+<p>Opscode Cookbooks:</p>
+
+<ul>
+<li>build-essential</li>
+<li>python</li>
+<li>git</li>
+</ul>
+
+<h1>Default Collectors</h1>
+
+<p>Diamond has the following <a href="https://github.com/BrightcoveOS/Diamond/wiki/Collectors">Collectors</a> enabled by default:<br>
+<code>Cpu</code>, <code>DiskSpace</code>, <code>DiskUsage</code>, <code>LoadAvg</code>, <code>Memory</code>, <code>SockStat</code>, <code>Vmstat</code>.</p>
+
+<h1>Resources and Providers</h1>
+
+<p>This cookbook provides three resources and corresponding providers.</p>
+
+<h2><code>install.rb</code></h2>
+
+<p>Install Diamond with this resource.</p>
+
+<p>Actions:</p>
+
+<ul>
+<li><code>git</code> - Clones the source from <a href="https://github.com/BrightcoveOS/Diamond.git">Github</a> and installs using <code>python setup.py install</code></li>
+<li><code>tarball</code> - Fetches a tarball containing using HTTP and installs using <code>python setup.py install</code></li>
+</ul>
+
+<p>Attribute Parameters:</p>
+
+<h2>diamond::install</h2>
+
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>prefix</td>
+    <td>String</td>
+    <td>Prefix of where to install diamond to</td>
+    <td><tt><code>/opt/diamond</code></tt></td>
+  </tr>
+  <tr>
+    <td>git_repository_uri</td>
+    <td>String</td>
+    <td>Location of where the cookbook fetches Diamond from to install</td>
+    <td><tt><code>https://github.com/BrightcoveOS/Diamond.git</code></tt></td>
+  </tr>
+  <tr>
+    <td>git_reference</td>
+    <td>String</td>
+    <td>Which git reference to install Diamond from</td>
+    <td><tt><code>master</code></tt></td>
+  </tr>
+  <tr>
+    <td>required_python_packages</td>
+    <td>Hash</td>
+    <td>List of python packages to install for Diamond</td>
+    <td><tt><code>{ "configobj" => "4.7.2","psutil" => "0.6.1"}></code></tt></td>
+  </tr>
+  <tr>
+    <td>cookbook</td>
+    <td>String</td>
+    <td>Name of the cookbook that holds the erb templates</td>
+    <td><tt><code>diamond</code></tt></td>
+  </tr>
+  <tr>
+    <td>tarball_path</td>
+    <td>String</td>
+    <td>Url of the Tarball to install Diamond with</td>    
+    <td><tt><code>https://github.com/BrightcoveOS/Diamond/archive/master.tar.gz</code></tt></td>
+  </tr>
+  <tr>
+    <td>tarball_extract_fldr</td>
+    <td>String</td>
+    <td>Name of the directory that holds Diamond in the tarball</td>
+    <td><tt><code>Diamond-master</code></tt></td>
+  </tr>
+</table>
+
+<h2><code>configure.rb</code></h2>
+
+<p>Configure Diamond with this resource.</p>
+
+<p>Actions:</p>
+
+<ul>
+<li><code>config</code> - Creates <code>#{new_resource.prefix}/etc/diamond/diamond.conf</code></li>
+</ul>
+
+<p>Attribute Parameters:</p>
+
+<h3>diamond::configure</h3>
+
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>cookbook</td>
+    <td>String</td>
+    <td>Name of the cookbook that holds the erb templates</td>
+    <td><tt><code>diamond</code></tt></td>
+  </tr>
+  <tr>
+    <td>diamond_configuration_source></td>
+    <td>String</td>
+    <td>Name of the ERB Template used to generate diamond.conf</td>
+    <td><tt><code>diamond.conf.erb</code></tt></td>
+  </tr>
+  <tr>
+    <td>diamond_handlers</td>
+    <td>Array</td>
+    <td>Array of the Handlers to configure Diamond with</td>
+    <td><tt><code>["diamond.handler.graphitepickle.GraphitePickleHandler"]</code></tt></td>
+  </tr>
+  <tr>
+    <td>diamond_user</td>
+    <td>String</td>
+    <td>Name of the user for diamond to run as</td>
+  </tr>
+  <tr>
+    <td>diamond_group</td>
+    <td>String</td>
+    <td>Name of the group the diamond user will run as</td>
+  </tr>
+  <tr>
+    <td>collectors_config_path</td>
+    <td>String</td>
+    <td>Path where Diamond will store and retrieve configuration files for the Collectors</td>
+    <td><tt><code>/opt/diamond/etc/diamond/collectors</code></tt></td>
+  </tr>
+  <tr>
+    <td>diamond_collectors_path</td>
+    <td>String</td>
+    <td>Directory where the collectors are installed</td>
+    <td><tt><code>/opt/diamond/share/diamond/collectors</code></tt></td>
+  </tr>
+  <tr>
+    <td>archive_handler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the archive handler</td>
+    <td><tt><code>{  "log_file" => "/var/log/diamond/diamond.log", "days" => 7 }</code></tt></td>
+  </tr>
+  <tr>
+    <td>graphite_handler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the graphite handler</td>
+    <td><tt><code>{ "host" => "localhost", "port" => 2003, "batch" => 256, "timeout" => 15 }</code></tt></td>
+  </tr>
+  <tr>
+    <td>graphite_picklehandler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the graphite pickle handler</td>
+    <td><tt><code>{ "host" => "localhost", "port" => 2004, "batch" => 256, "timeout" => 15 }</code></tt></td>
+  </tr>
+  <tr>
+    <td>statsdhandler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the statsd handler</td>
+    <td><tt><code>{ "host" => "127.0.0.1", "port" => 8125 }</code></tt></td>
+  </tr>
+  <tr>
+    <td>tsdbhandler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the tsdb handler</td>
+    <td><tt><code>{ "host" => "127.0.0.1", "port" => 4242, "timeout" => 15 }</code></tt></td>
+  </tr>
+  <tr>
+    <td>mysqlhandler</td>
+    <td>Hash</td>
+    <td>Configuration parameters for the mysql handler</td>
+    <td><tt><code>{ "host" => "127.0.0.1", "port" => 3306, "username" => String.new, "password" => String.new, "database" => "diamond", "table" => "metrics", "col_time" => "timestamp", "col_metric" => "metric", "col_value" => "value" }</code></tt></td>
+  </tr>
+  <tr>
+    <td>collectors</td>
+    <td>Hash</td>
+    <td>Configuration for the collectors allowing you to configure suffix, prefix, how to determine hostname and/or set the hostname manually</td>
+    <td><tt><code>{ "hostname_method" => "fqdn_short", "hostname" => String.new, "path_prefix" => String.new, "path_suffix" => String.new, "interval" => 300 }</code></tt></td>
+  </tr>
+</table>
+
+<h2><code>plugin.rb</code></h2>
+
+<p>Enable / Disable plugins with this resource.</p>
+
+<p>Actions:</p>
+
+<ul>
+<li><code>enable</code> - Creates a configuration file for the collector specified and restarts Diamond</li>
+<li><code>disable</code> - Deletes the configuration file for the collector specified and restarts Diamond</li>
+</ul>
+
+<h2>diamond::plugin</h2>
+
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>source</td>
+    <td>String</td>
+    <td>Name of the ERB Template to be used generating the Collector configuration files</td>
+    <td><tt><code>generic_collector_config.conf.erb</code></tt></td>
+  </tr>
+  <tr>
+    <td>cookbook</td>
+    <td>String</td>
+    <td>Name of the cookbook holding the ERB template for the source attribute</td>
+    <td><tt><code>/opt/diamond/etc/diamond/collectors</code></tt></td>
+  </tr>
+  <tr>
+    <td>options</td>
+    <td>Hash</td>
+    <td>Allows you to specify options outside of enabling a collector</td>
+  </tr>
+</table>
+
+<h1>Generic Usage</h1>
+
+<p>The following example will just configure Diamond with the <code>GraphiteHandler</code> and with the default collectors enabled only.</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_diamond_install'>diamond_install</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:git</span>  
+<span class='kw'>end</span>  
+<span class='id identifier rubyid_diamond_configure'>diamond_configure</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>   
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:config</span>  
+  <span class='id identifier rubyid_diamond_handlers'>diamond_handlers</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diamond.handler.graphite.GraphiteHandler</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>    
+  <span class='id identifier rubyid_graphite_handler'>graphite_handler</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>port</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2003</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>15</span><span class='rbrace'>}</span><span class='rparen'>)</span>  
+<span class='kw'>end</span>
+</code></pre>
+
+<h1>Basic Usage with Plugins</h1>
+
+<p>The following example will configure Diamond with the <code>archive.ArchiveHandler</code> and <code>graphite.GraphiteHandler</code> with the <code>PingCollector</code> and <code>CPUCollector</code> enabled.</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_diamond_install'>diamond_install</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:git</span>  
+<span class='kw'>end</span>  
+<span class='id identifier rubyid_diamond_configure'>diamond_configure</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:config</span>  
+  <span class='id identifier rubyid_diamond_handlers'>diamond_handlers</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diamond.handler.archive.ArchiveHandler</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diamond.handler.graphite.GraphiteHandler</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>  
+  <span class='id identifier rubyid_graphite_handler'>graphite_handler</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>port</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2003</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>15</span><span class='rbrace'>}</span><span class='rparen'>)</span>  
+<span class='kw'>end</span>  
+  <span class='id identifier rubyid_diamond_plugin'>diamond_plugin</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>CPUCollector</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:enable</span>  
+  <span class='id identifier rubyid_options'>options</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>  
+<span class='kw'>end</span>  
+  <span class='id identifier rubyid_diamond_plugin'>diamond_plugin</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PingCollector</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:enable</span>  
+  <span class='id identifier rubyid_options'>options</span><span class='lparen'>(</span><span class='lbrace'>{</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>enabled</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>True</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bin</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/bin/ping</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>use_sudo</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>False</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sudo_cmd</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/bin/sudo</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target_1</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>google.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target_2</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>aol.com</span><span class='tstring_end'>&quot;</span></span>  
+    <span class='rbrace'>}</span><span class='rparen'>)</span>  
+  <span class='kw'>end</span>  
+</code></pre>
+
+<h1>Advanced Usage with Custom Collectors Installed</h1>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_diamond_install'>diamond_install</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:git</span>  
+<span class='kw'>end</span>  
+<span class='id identifier rubyid_diamond_configure'>diamond_configure</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>hostname</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:config</span>  
+  <span class='id identifier rubyid_diamond_handlers'>diamond_handlers</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diamond.handler.archive.ArchiveHandler</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diamond.handler.graphite.GraphiteHandler</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>  
+  <span class='id identifier rubyid_graphite_handler'>graphite_handler</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>port</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>2003</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>timeout</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='int'>15</span><span class='rbrace'>}</span><span class='rparen'>)</span>  
+<span class='kw'>end</span>  
+<span class='id identifier rubyid_directory'>directory</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/share/diamond/collectors/latency_http</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:create</span>  
+<span class='kw'>end</span>  
+<span class='id identifier rubyid_cookbook_file'>cookbook_file</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/usr/local/share/diamond/collectors/latency_http/latency_http.py</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_source'>source</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>latency_http.py</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_cookbook'>cookbook</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>our_custom</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_diamond_plugin'>diamond_plugin</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>LatencyHTTTPCollector</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>  
+  <span class='id identifier rubyid_action'>action</span> <span class='symbol'>:enable</span>  
+  <span class='id identifier rubyid_options'>options</span><span class='lparen'>(</span><span class='lbrace'>{</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>enabled</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>True</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target_1</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host1.com</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>  
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>target_2</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>host2.com</span><span class='tstring_end'>&quot;</span></span>  
+  <span class='rbrace'>}</span><span class='rparen'>)</span>  
+<span class='kw'>end</span>  
+</code></pre>
+
+<p>Author:: Scott M. Likens (<a href="mailto:scott@likens.us">scott@likens.us</a>)</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_http'>http</span><span class='symbol'>:/</span><span class='op'>/</span><span class='id identifier rubyid_www'>www</span><span class='period'>.</span><span class='id identifier rubyid_apache'>apache</span><span class='period'>.</span><span class='id identifier rubyid_org'>org</span><span class='op'>/</span><span class='id identifier rubyid_licenses'>licenses</span><span class='op'>/</span><span class='const'>LICENSE</span><span class='op'>-</span><span class='float'>2.0</span>
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+</div>
+
+<h1>Cookbooks List</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Cookbook</th>
+      <th>Description</th>
+      <th>Version</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  
+  
+    <tr class="r1">
+      <td><span class='object_link'><a href="chef/diamond.html" title="chef::diamond (cookbook)">diamond</a></span></td>
+      <td>Installs/Configures diamond</td>
+      <td>0.2.0</td>
+    </tr>
+    
+  
+  </tbody>
+</table>
+
+</div>
+</div>
+
+    <div id="footer">
+  Generated on Sat Apr 20 18:04:05 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.3 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

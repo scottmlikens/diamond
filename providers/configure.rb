@@ -1,3 +1,11 @@
+# Creates a Diamond configuration file
+#
+#    diamond_configure node['hostname']" do  
+#      action :config  
+#      diamond_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphite.GraphiteHandler" ]  
+#      graphite_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})  
+#    end  
+
 action :config do
   template new_resource.prefix + "/etc/diamond/diamond.conf" do
     source new_resource.diamond_configuration_source
