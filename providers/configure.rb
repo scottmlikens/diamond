@@ -9,6 +9,7 @@
 action :config do
   template new_resource.prefix + "/etc/diamond/diamond.conf" do
     source new_resource.diamond_configuration_source
+    cookbook new_resource.cookbook
     mode 0644
     owner "root"
     group "root"
