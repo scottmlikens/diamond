@@ -6,13 +6,13 @@
 <title>
   Cookbook Documentation
   
-    &mdash; Documentation by YARD 0.8.3
+    &mdash; Documentation by YARD 0.8.6.1
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
@@ -74,6 +74,58 @@
   <h1>Chef Cookbooks Documentation</h1>
   
 
+<h1>Mopub&#39;s chef-repo repository</h1>
+
+<h2>Requirements</h2>
+
+<p>Chef 0.10.8 - (10.24.0)[<a href="https://opscode-omnitruck-release.s3.amazonaws.com/mac_os_x/10.7/x86_64/chef-10.24.0_1.mac_os_x.10.7.2.sh">https://opscode-omnitruck-release.s3.amazonaws.com/mac_os_x/10.7/x86_64/chef-10.24.0_1.mac_os_x.10.7.2.sh</a>]
+&gt;Our servers run 10.24.0 but it&#39;s possible for plugins and other things to work on 0.10.8</p>
+
+<h2>Testing</h2>
+
+<p>Our cookbooks should have tests
+TBD</p>
+
+<h2>Bootstrapping instances</h2>
+
+<p>We currently deploy <em>10.24.0</em> on our servers in production.  You can bootstrap them like:<br>
+<code>shell
+knife bootstrap 74.201.193.100 -N marketplace-176852 --bootstrap-version 10.24.0 --environment production -r &quot;role[marketplace]&quot; -x ubuntu --sudo
+</code></p>
+
+<h1>Old getting Started Information</h1>
+
+<p>2) Ask Nafis or James Sulinksi to add you to the mopub organization on opscode</p>
+
+<p>3) Accept the invitation to the account</p>
+
+<p>4) Get private key from opscode account page and place it in ~/.chef</p>
+
+<p>5) Get chef.pem file and put in keychain</p>
+
+<p>6) chmod 0600 chef.pem</p>
+
+<p>7) Get validation key and put in  ~/.chef/</p>
+
+<p>8) on command line: brew install ruby</p>
+
+<p>9) add ruby path to .bash_profile and source it</p>
+
+<p>10) on command line: sudo gem install chef knife-ec2</p>
+
+<p>11) git clone <a href="mailto:git@github.com">git@github.com</a>:mopub/mopub-chef.git</p>
+
+<p>12) Then you need to export environment variables that the knife.rb file uses to your bash_profile:    </p>
+
+<p>export OPSCODE_USER=<br>
+export AWS_ACCESS_KEY_ID=<br>
+export AWS_SECRET_ACCESS_KEY=<br>
+export AWS_SSH_KEY_ID=chef<br>
+export ORGNAME=mopub   </p>
+
+<p>13) Source bash_profile or open a new shell</p>
+
+<p>14) knife node list (to test)</p>
 
 
 
@@ -92,7 +144,7 @@
     <tr class="r1">
       <td><span class='object_link'><a href="chef/diamond.html" title="chef::diamond (cookbook)">diamond</a></span></td>
       <td>Installs/Configures diamond</td>
-      <td>0.2.0</td>
+      <td>0.2.1</td>
     </tr>
     
   
@@ -103,9 +155,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 20 18:04:05 2013 by
+  Generated on Tue Apr 30 00:51:22 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.3 (ruby-1.9.3).
+  0.8.6.1 (ruby-1.9.3).
 </div>
 
   </body>

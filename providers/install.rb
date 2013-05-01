@@ -13,7 +13,7 @@ action :git do
     repository new_resource.git_repository_uri
     reference new_resource.git_reference
     action :checkout
-    not_if { ::File.exists?("/usr/local/bin/diamond") || ::File.exists?("/mnt/git/Diamond/setup.py") }
+    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
   end
   directory new_resource.prefix do
     action :create
@@ -21,6 +21,7 @@ action :git do
   end
   python_virtualenv new_resource.prefix do
     action :create
+    interpreter "python2.7"
   end
   new_resource.required_python_packages.collect do |pkg, ver|
     python_pip pkg do
@@ -32,7 +33,7 @@ action :git do
   execute "create version.txt" do
     cwd Chef::Config[:file_cache_path] + "/" + new_resource.name
     command "/bin/bash version.sh > version.txt"
-    creates Chef::Config[:file_cache_path] + "/version.txt"
+    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
   end
   script "install diamond in virtualenv #{new_resource.prefix}" do
     interpreter "bash"
@@ -42,6 +43,7 @@ action :git do
     code <<-EOH
     python setup.py install
     EOH
+    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
     creates new_resource.prefix + "/bin/diamond"
   end
   
@@ -71,6 +73,7 @@ action :tarball do
   end
   python_virtualenv new_resource.prefix do
     action :create
+    interpreter "python2.7"
   end
   remote_file Chef::Config[:file_cache_path] + "/diamond.tar.gz" do
     source new_resource.tarball_path
@@ -86,7 +89,7 @@ action :tarball do
   script "extract tarball" do
     interpreter "bash"
     code "tar -C " + Chef::Config[:file_cache_path] + "/" + new_resource.tarball_extract_fldr + " -xzf " + Chef::Config[:file_cache_path] + "/diamond.tar.gz"
-    creates Chef::Config[:file_cache_path] + "/" + new_resource.tarball_extract_fldr + "/setup.py"
+    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
   end
   new_resource.required_python_packages.collect do |pkg, ver|
     python_pip pkg do
@@ -98,7 +101,7 @@ action :tarball do
   execute "create version.txt" do
     cwd Chef::Config[:file_cache_path] + "/" + new_resource.tarball_extract_fldr + "/" + new_resource.tarball_extract_fldr
     command "/bin/bash version.sh > version.txt"
-    creates Chef::Config[:file_cache_path] + "/" + new_resource.tarball_extract_fldr + "/version.txt"
+    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
   end
   script "install diamond in virtualenv #{new_resource.prefix}" do
     interpreter "bash"
