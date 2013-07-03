@@ -9,11 +9,13 @@ platforms:
   run_list:
   - recipe[apt]
 suites:
-- name: test_git
+- name: git
   run_list: 
-  - recipe[diamond::test_git]
+  - recipe[minitest-handler]
+  - recipe[diamond_test::git]
   attributes: {}
-- name: test_tarball
+- name: tarball
   run_list:
-  - recipe[diamond::test_tarball]
+  - recipe[minitest-handler]
+  - recipe[diamond_test::tarball]
   attributes: {}
