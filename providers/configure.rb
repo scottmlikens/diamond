@@ -30,6 +30,7 @@ action :config do
                 :collectors => new_resource.collectors,
                 :prefix => new_resource.prefix
               })
+    notifies :restart, 'runit_service[diamond]', :delayed
   end
   service "diamond" do
     provider Chef::Provider::Service::Upstart
