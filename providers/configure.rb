@@ -42,7 +42,7 @@ action :config do
   end
   runit_service "diamond" do
     run_template_name "diamond"
-    cookbook "diamond"
+    cookbook new_resource.cookbook
     default_logger true
     options({
               :prefix => new_resource.prefix
