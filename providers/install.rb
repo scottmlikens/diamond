@@ -5,10 +5,6 @@
 #    end
 
 action :git do
-  python_pip "diamond" do
-    action :remove
-    only_if { ::File.exists?("/usr/local/lib/python2.7/dist-packages/diamond/version.py") }
-  end
   git Chef::Config[:file_cache_path] + "/" + new_resource.name do
     repository new_resource.git_repository_uri
     reference new_resource.git_reference
@@ -21,7 +17,6 @@ action :git do
   end
   python_virtualenv new_resource.prefix do
     action :create
-    interpreter "python2.7"
   end
   new_resource.required_python_packages.collect do |pkg, ver|
     python_pip pkg do
@@ -63,17 +58,12 @@ end
 #    end
 
 action :tarball do
-  python_pip "diamond" do
-    action :remove
-    only_if { ::File.exists?("/usr/local/lib/python2.7/dist-packages/diamond/version.py") }
-  end
   directory new_resource.prefix do
     action :create
     mode 0755
   end
   python_virtualenv new_resource.prefix do
     action :create
-    interpreter "python2.7"
   end
   remote_file Chef::Config[:file_cache_path] + "/diamond.tar.gz" do
     source new_resource.tarball_path
