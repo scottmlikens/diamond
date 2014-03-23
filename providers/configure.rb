@@ -32,6 +32,23 @@ action :config do
               })
     notifies :restart, 'runit_service[diamond]', :delayed
   end
+  
+  template new_resource.prefix + "/etc/diamond/handlers/GraphiteHandler.conf" do
+    source "generic_collector_config.conf.erb"
+    cookbook "diamond"
+    variables({
+                :name => "GraphiteHandler",
+                :options => new_resource.graphite_handler
+              })
+  end
+  template new_resource.prefix + "/etc/diamond/handlers/GraphitePickleHandler.conf" do
+    source "generic_collector_config.conf.erb"
+    cookbook "diamond"
+    variables({
+                :name => "GraphitePickleHandler",
+                :options => new_resource.graphite_picklehandler
+              })
+  end             
   service "diamond" do
     provider Chef::Provider::Service::Upstart
     action [:stop,:disable]
