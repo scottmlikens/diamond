@@ -65,11 +65,8 @@ action :tarball do
   python_virtualenv new_resource.prefix do
     action :create
   end
-  remote_file Chef::Config[:file_cache_path] + "/diamond.tar.gz" do
-    source new_resource.tarball_path
-    backup false
-    mode "0644"
-    action :create_if_missing
+  execute "wget -O #{Chef::Config[:file_cache_path]}/diamond.tar.gz #{new_resource.tarball_path}" do
+    action :run
     not_if { ::File.exists?(Chef::Config[:file_cache_path] + "/diamond.tar.gz") }
   end
   directory Chef::Config[:file_cache_path] + "/" + new_resource.tarball_extract_fldr do
