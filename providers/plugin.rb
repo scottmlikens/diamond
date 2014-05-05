@@ -14,6 +14,7 @@ action :enable do
     source new_resource.options["source"] || "generic_collector_config.conf.erb"
     cookbook new_resource.options["cookbook"] || "diamond"
     variables :name=>new_resource.name, :options=>new_resource.options
+    helpers(Chef::Recipe::Diamond)
     notifies :restart, "runit_service[diamond]"
   end
   new_resource.updated_by_last_action(true)
