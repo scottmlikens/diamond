@@ -7,5 +7,5 @@ attribute :collectors_path, :kind_of => String, :default => "/opt/diamond/etc/di
 
 def initialize(*args)
   super
-  @action = :create
+  @action = :enable
 end
