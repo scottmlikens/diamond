@@ -5,7 +5,9 @@ attribute :template, :kind_of => String
 attribute :cookbook, :kind_of => String
 attribute :collectors_path, :kind_of => String, :default => "/opt/diamond/etc/diamond/collectors"
 
+default_action :enable if defined?(default_action) # Chef > 10.8
+
 def initialize(*args)
   super
-  @action = :create
+  @action = :enable
 end
