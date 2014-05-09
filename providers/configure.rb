@@ -37,6 +37,7 @@ action :config do
                 :collectors => new_resource.collectors,
                 :prefix => new_resource.prefix
               })
+    helpers(Chef::Recipe::Diamond)
     notifies :restart, 'runit_service[diamond]', :delayed
   end
   
@@ -47,6 +48,7 @@ action :config do
                 :name => "GraphiteHandler",
                 :options => new_resource.graphite_handler
               })
+    helpers(Chef::Recipe::Diamond)
   end
   template new_resource.prefix + "/etc/diamond/handlers/GraphitePickleHandler.conf" do
     source "generic_collector_config.conf.erb"
@@ -55,6 +57,7 @@ action :config do
                 :name => "GraphitePickleHandler",
                 :options => new_resource.graphite_picklehandler
               })
+    helpers(Chef::Recipe::Diamond)
   end             
   service "diamond" do
     if init_style == 'upstart'

@@ -19,9 +19,11 @@ suites:
   run_list:
   - recipe[minitest-handler]
   - recipe[diamond_test::git]
+  - recipe[diamond_test::processcollector]
   attributes: {}
 - name: tarball
   run_list:
   - recipe[minitest-handler]
   - recipe[diamond_test::tarball]
+  - recipe[diamond_test::processcollector]
   attributes: {}
