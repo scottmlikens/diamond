@@ -7,6 +7,13 @@
 #    end  
 
 action :config do
+  case node['platform']
+  when 'ubuntu'
+    init_style = 'upstart'
+  else
+    init_style = 'sysvinit'
+  end
+
   template new_resource.prefix + "/etc/diamond/diamond.conf" do
     source new_resource.diamond_configuration_source
     cookbook new_resource.cookbook
@@ -50,7 +57,12 @@ action :config do
               })
   end             
   service "diamond" do
-    provider Chef::Provider::Service::Upstart
+    if init_style == 'upstart'
+      provider Chef::Provider::Service::Upstart
+      only_if { ::File.exists?("/etc/init/diamond.conf") }
+    elsif init_style == 'sysvinit'
+      only_if { ::File.exists?("/etc/init.d/diamond") }
+    end
     action [:stop,:disable]
   end
   file "/etc/init/diamond.conf" do
