@@ -8,7 +8,7 @@ Requirements
 
 
 ## Chef Version
-Requires Chef 0.7.10 or higher for Lightweight Resource and Provider support. Chef 0.8+ is recommended. While this cookbook can be used in `chef-solo` mode, to gain the most flexibility, we recommend using `chef-client` with a Chef Server.
+Requires Chef 11 or higher.
 
 ## Cookbooks
 
