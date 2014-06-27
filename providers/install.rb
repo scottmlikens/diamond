@@ -9,7 +9,7 @@ action :git do
     repository new_resource.git_repository_uri
     reference new_resource.git_reference
     action :checkout
-    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
+    not_if { ::File.exists?("#{new_resource.prefix}/bin/diamond") }
   end
   directory new_resource.prefix do
     action :create
@@ -28,7 +28,7 @@ action :git do
   execute "create version.txt" do
     cwd Chef::Config[:file_cache_path] + "/" + new_resource.name
     command "/bin/bash version.sh > version.txt"
-    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
+    not_if { ::File.exists?("#{new_resource.prefix}/bin/diamond") }
   end
   script "install diamond in virtualenv #{new_resource.prefix}" do
     interpreter "bash"
@@ -38,7 +38,7 @@ action :git do
     code <<-EOH
     python setup.py install
     EOH
-    not_if { ::File.exists?("/opt/diamond/bin/diamond") }
+    not_if { ::File.exists?("#{new_resource.prefix}/bin/diamond") }
     creates new_resource.prefix + "/bin/diamond"
   end
   
