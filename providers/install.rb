@@ -42,7 +42,7 @@ action :git do
     creates new_resource.prefix + "/bin/diamond"
   end
   
-  ["/var/log/diamond/",new_resource.prefix + "/share/diamond",new_resource.prefix + "/share/diamond/collectors"].each do |dp|
+  ["/var/log/diamond/",new_resource.prefix + "/etc/diamond",new_resource.prefix + "/share/diamond",new_resource.prefix + "/share/diamond/collectors"].each do |dp|
     directory dp do
       action :create
       recursive true
@@ -100,7 +100,7 @@ action :tarball do
     EOH
     creates new_resource.prefix + "/bin/diamond"
   end
-  ["/var/log/diamond/",new_resource.prefix + "/share/diamond",new_resource.prefix + "/share/diamond/collectors"].each do |dp|
+  ["/var/log/diamond/",new_resource.prefix + "/etc/diamond",new_resource.prefix + "/share/diamond",new_resource.prefix + "/share/diamond/collectors"].each do |dp|
     directory dp do
       action :create
       recursive true
