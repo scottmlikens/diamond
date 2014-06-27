@@ -15,7 +15,7 @@ action :enable do
     cookbook new_resource.options["cookbook"] || "diamond"
     variables :name=>new_resource.name, :options=>new_resource.options
     helpers(Chef::Recipe::Diamond)
-    notifies :restart, "runit_service[diamond]"
+    notifies :restart, "runit_service[#{new_resource.runit_name}]"
   end
   new_resource.updated_by_last_action(true)
 end
@@ -31,7 +31,7 @@ action :disable do
   file new_resource.name do
     path new_resource.collectors_path + "/" + new_resource.name + ".conf"
     action :delete
-    notifies :restart, "runit_service[diamond]"
+    notifies :restart, "runit_service[#{new_resource.runit_name}]"
   end
   new_resource.updated_by_last_action(true)
 end

@@ -2,6 +2,7 @@ actions :config
 
 attribute :cookbook, :kind_of => String, :default => "diamond"
 attribute :prefix, :kind_of => String, :default => "/opt/diamond"
+attribute :runit_name, :kind_of => String, :default => "diamond"
 attribute :diamond_configuration_source, :kind_of => String, :default => "diamond.conf.erb"
 attribute :diamond_init_source, :kind_of => String, :default => "diamond.erb"
 attribute :diamond_handlers, :kind_of => Array, :default => ["diamond.handler.graphitepickle.GraphitePickleHandler"]

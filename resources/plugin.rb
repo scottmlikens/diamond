@@ -4,6 +4,7 @@ attribute :source, :kind_of => String
 attribute :template, :kind_of => String
 attribute :cookbook, :kind_of => String
 attribute :collectors_path, :kind_of => String, :default => "/opt/diamond/etc/diamond/collectors"
+attribute :runit_name, :kind_of => String, :default => "diamond"
 
 default_action :enable if defined?(default_action) # Chef > 10.8
 

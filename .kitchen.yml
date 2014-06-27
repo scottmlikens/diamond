@@ -27,3 +27,7 @@ suites:
   - recipe[diamond_test::tarball]
   - recipe[diamond_test::processcollector]
   attributes: {}
+- name: custom_install
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[diamond_test::custom_install]

@@ -38,7 +38,7 @@ action :config do
                 :prefix => new_resource.prefix
               })
     helpers(Chef::Recipe::Diamond)
-    notifies :restart, 'runit_service[diamond]', :delayed
+    notifies :restart, "runit_service[#{new_resource.runit_name}]", :delayed
   end
   
   template new_resource.prefix + "/etc/diamond/handlers/GraphiteHandler.conf" do
@@ -72,7 +72,7 @@ action :config do
     action :delete
     only_if { ::File.exists?("/etc/init/diamond.conf") }
   end
-  runit_service "diamond" do
+  runit_service new_resource.runit_name do
     run_template_name "diamond"
     cookbook new_resource.cookbook
     default_logger true
