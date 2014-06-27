@@ -119,6 +119,12 @@ Attribute Parameters:
     <td><tt><code>diamond</code></tt></td>
   </tr>
   <tr>
+    <td>runit_name</td>
+    <td>String</td>
+    <td>Name of the runit service to restart when modifying this configuration</td>
+    <td><tt><code>diamond</code></tt></td>
+  </tr>
+  <tr>
     <td>diamond_configuration_source></td>
     <td>String</td>
     <td>Name of the ERB Template used to generate diamond.conf</td>
@@ -225,6 +231,12 @@ Actions:
     <td>String</td>
     <td>Name of the cookbook holding the ERB template for the source attribute</td>
     <td><tt><code>/opt/diamond/etc/diamond/collectors</code></tt></td>
+  </tr>
+  <tr>
+    <td>runit_name</td>
+    <td>String</td>
+    <td>Name of the runit service to restart when modifying this plugin</td>
+    <td><tt><code>diamond</code></tt></td>
   </tr>
   <tr>
     <td>options</td>
