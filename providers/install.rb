@@ -8,8 +8,7 @@ action :git do
   git Chef::Config[:file_cache_path] + "/" + new_resource.name do
     repository new_resource.git_repository_uri
     reference new_resource.git_reference
-    action :checkout
-    not_if { ::File.exists?("#{new_resource.prefix}/bin/diamond") }
+    action :sync
   end
   directory new_resource.prefix do
     action :create
@@ -41,7 +40,7 @@ action :git do
     not_if { ::File.exists?("#{new_resource.prefix}/bin/diamond") }
     creates new_resource.prefix + "/bin/diamond"
   end
-  
+
   ["/var/log/diamond/",new_resource.prefix + "/etc/diamond",new_resource.prefix + "/share/diamond",new_resource.prefix + "/share/diamond/collectors"].each do |dp|
     directory dp do
       action :create
