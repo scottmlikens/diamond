@@ -17,12 +17,12 @@ attribute :graphite_handler, :kind_of => Hash, :default => { "host" => "localhos
 attribute :graphite_picklehandler, :kind_of => Hash, :default => { "host" => "localhost", "port" => 2004, "batch" => 256, "timeout" => 15 }
 attribute :statsdhandler, :kind_of => Hash, :default => { "host" => "127.0.0.1", "port" => 8125 }
 attribute :tsdbhandler, :kind_of => Hash, :default => { "host" => "127.0.0.1", "port" => 4242, "timeout" => 15 }
-attribute :mysqlhandler, :kind_of => Hash, :default => { "host" => "127.0.0.1", "port" => 3306, "username" => String.new, "password" => String.new, "database" => "diamond", "table" => "metrics", "col_time" => "timestamp", "col_metric" => "metric", "col_value" => "value" } 
+attribute :mysqlhandler, :kind_of => Hash, :default => { "host" => "127.0.0.1", "port" => 3306, "username" => String.new, "password" => String.new, "database" => "diamond", "table" => "metrics", "col_time" => "timestamp", "col_metric" => "metric", "col_value" => "value" }
 attribute :collectors, :kind_of => Hash, :default => { "hostname_method" => "fqdn_short", "hostname" => String.new, "path_prefix" => String.new, "path_suffix" => String.new, "interval" => 300 }
- 
+attribute :timeout, :kind_of => Fixnum, :default => 45
+
 def initialize(*args)
   super
   @action = :config
   @run_context.include_recipe ["build-essential","git","python","python::pip","python::virtualenv","runit::default"]
 end
-

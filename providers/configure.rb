@@ -75,7 +75,7 @@ action :config do
   runit_service new_resource.runit_name do
     run_template_name "diamond"
     cookbook new_resource.cookbook
-    sv_timeout 45
+    sv_timeout new_resource.timeout
     default_logger true
     options({
               :prefix => new_resource.prefix
