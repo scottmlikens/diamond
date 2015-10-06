@@ -4,7 +4,7 @@ maintainer_email "scott at likens dot us"
 license          "Apache 2.0"
 description      "Installs/Configures diamond"
 
-version          "0.3.0"
+version          "0.3.1"
 
 supports "ubuntu"
 
