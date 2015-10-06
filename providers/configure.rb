@@ -1,10 +1,10 @@
 # Creates a Diamond configuration file
 #
-#    diamond_configure node['hostname']" do  
-#      action :config  
-#      diamond_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphite.GraphiteHandler" ]  
-#      graphite_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})  
-#    end  
+#    diamond_configure node['hostname']" do
+#      action :config
+#      diamond_handlers [ "diamond.handler.archive.ArchiveHandler", "diamond.handler.graphite.GraphiteHandler" ]
+#      graphite_handler({"host" => "127.0.0.1","port" => 2003, "timeout" => 15})
+#    end
 
 action :config do
   case node['platform']
@@ -40,7 +40,7 @@ action :config do
     helpers(Chef::Recipe::Diamond)
     notifies :restart, "runit_service[#{new_resource.runit_name}]", :delayed
   end
-  
+
   template new_resource.prefix + "/etc/diamond/handlers/GraphiteHandler.conf" do
     source "generic_collector_config.conf.erb"
     cookbook "diamond"
@@ -58,7 +58,7 @@ action :config do
                 :options => new_resource.graphite_picklehandler
               })
     helpers(Chef::Recipe::Diamond)
-  end             
+  end
   service "diamond" do
     if init_style == 'upstart'
       provider Chef::Provider::Service::Upstart
@@ -75,6 +75,7 @@ action :config do
   runit_service new_resource.runit_name do
     run_template_name "diamond"
     cookbook new_resource.cookbook
+    sv_timeout 45
     default_logger true
     options({
               :prefix => new_resource.prefix

@@ -1,11 +1,12 @@
-site :opscode
+# -*- mode: ruby -*-
+source "https://supermarket.getchef.com"
 
 metadata
 
 cookbook "python"
 cookbook "git"
 cookbook "build-essential"
-cookbook "runit","1.5.8"
+cookbook "runit"
 
 group :integration do
   cookbook "apt"
