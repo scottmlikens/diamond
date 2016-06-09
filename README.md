@@ -1,8 +1,6 @@
 Description
 ===========
 
-[![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.3.0/dist/gratipay.png)](https://gratipay.com/damm/)
-
 This cookbook provides providers and resources to configure and manage [Diamond](https://github.com/BrightcoveOS/Diamond) Diamond is a python daemon that collects system metrics and publishes them to Graphite. It is capable of collecting cpu, memory, network, i/o, load and disk metrics. Additionally, it features an API for implementing custom collectors for gathering metrics from almost any source.
 
 Requirements
