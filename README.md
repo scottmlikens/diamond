@@ -1,7 +1,7 @@
 Description
 ===========
 
-This cookbook provides providers and resources to configure and manage [Diamond](https://github.com/BrightcoveOS/Diamond) Diamond is a python daemon that collects system metrics and publishes them to Graphite. It is capable of collecting cpu, memory, network, i/o, load and disk metrics. Additionally, it features an API for implementing custom collectors for gathering metrics from almost any source.
+This cookbook provides providers and resources to configure and manage [Diamond](https://github.com/python-diamond/Diamond) Diamond is a python daemon that collects system metrics and publishes them to Graphite. It is capable of collecting cpu, memory, network, i/o, load and disk metrics. Additionally, it features an API for implementing custom collectors for gathering metrics from almost any source.
 
 Requirements
 ------------
@@ -21,7 +21,7 @@ Opscode Cookbooks:
 Default Collectors
 =======================
 
-Diamond has the following [Collectors](https://github.com/BrightcoveOS/Diamond/wiki/Collectors) enabled by default:  
+Diamond has the following [Collectors](https://github.com/python-diamond/Diamond/wiki/Collectors) enabled by default:  
 `Cpu`, `DiskSpace`, `DiskUsage`, `LoadAvg`, `Memory`, `SockStat`, `Vmstat`.
 
 Resources and Providers
@@ -35,7 +35,7 @@ Install Diamond with this resource.
 
 Actions:
 
-* `git` - Clones the source from [Github](https://github.com/BrightcoveOS/Diamond.git) and installs using `python setup.py install`
+* `git` - Clones the source from [Github](https://github.com/python-diamond/Diamond.git) and installs using `python setup.py install`
 * `tarball` - Fetches a tarball containing using HTTP and installs using `python setup.py install`
 
 Attribute Parameters:
@@ -59,7 +59,7 @@ Attribute Parameters:
     <td>git_repository_uri</td>
     <td>String</td>
     <td>Location of where the cookbook fetches Diamond from to install</td>
-    <td><tt><code>https://github.com/BrightcoveOS/Diamond.git</code></tt></td>
+    <td><tt><code>https://github.com/python-diamond/Diamond.git</code></tt></td>
   </tr>
   <tr>
     <td>git_reference</td>
@@ -83,7 +83,7 @@ Attribute Parameters:
     <td>tarball_path</td>
     <td>String</td>
     <td>Url of the Tarball to install Diamond with</td>    
-    <td><tt><code>https://github.com/BrightcoveOS/Diamond/archive/master.tar.gz</code></tt></td>
+    <td><tt><code>https://github.com/python-diamond/Diamond/archive/master.tar.gz</code></tt></td>
   </tr>
   <tr>
     <td>tarball_extract_fldr</td>
