@@ -7,12 +7,6 @@
 #    end
 
 action :config do
-  case node['platform']
-  when 'ubuntu'
-    init_style = 'upstart'
-  else
-    init_style = 'sysvinit'
-  end
 
   template new_resource.prefix + "/etc/diamond/diamond.conf" do
     source new_resource.diamond_configuration_source
@@ -38,7 +32,6 @@ action :config do
                 :prefix => new_resource.prefix
               })
     helpers(Chef::Recipe::Diamond)
-    notifies :restart, "runit_service[#{new_resource.runit_name}]", :delayed
   end
 
   template new_resource.prefix + "/etc/diamond/handlers/GraphiteHandler.conf" do
@@ -50,6 +43,7 @@ action :config do
               })
     helpers(Chef::Recipe::Diamond)
   end
+
   template new_resource.prefix + "/etc/diamond/handlers/GraphitePickleHandler.conf" do
     source "generic_collector_config.conf.erb"
     cookbook "diamond"
@@ -59,27 +53,6 @@ action :config do
               })
     helpers(Chef::Recipe::Diamond)
   end
-  service "diamond" do
-    if init_style == 'upstart'
-      provider Chef::Provider::Service::Upstart
-      only_if { ::File.exists?("/etc/init/diamond.conf") }
-    elsif init_style == 'sysvinit'
-      only_if { ::File.exists?("/etc/init.d/diamond") }
-    end
-    action [:stop,:disable]
-  end
-  file "/etc/init/diamond.conf" do
-    action :delete
-    only_if { ::File.exists?("/etc/init/diamond.conf") }
-  end
-  runit_service new_resource.runit_name do
-    run_template_name "diamond"
-    cookbook new_resource.cookbook
-    sv_timeout new_resource.timeout
-    default_logger true
-    options({
-              :prefix => new_resource.prefix
-            })
-  end
+
   new_resource.updated_by_last_action(true)
 end
